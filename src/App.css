@@ -5,7 +5,7 @@
 }
 
 .hero{
-  min-height: 100vh; /*Nechat??*/
+  min-height: 760px; 
   display: flex; /*"automatické" rozložení obsahu*/
   align-items: center; /*svisle na střed*/
   justify-content: center; /*vodorovně na střed*/
@@ -16,40 +16,35 @@
   background-position: center; /*Střed obrázku na středu*/
   background-repeat: no-repeat; /*Obrázek nebude jak dlaždice*/
 
-  color: white; /*barva textu*/
+  color: #FFFFFF;
   position: relative; /*vše, co bude v hero jako absolute, tak se podřídí .hero*/
   padding: 2rem;
 }
 
 /*--------------------------------------*/
-.hero_scroll{
-  position: absolute;
-  bottom: 2rem;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 2rem;
 
-  color: white; /*k odstranění odkazu*/
-  text-decoration: none; /*k odstranění odkazu*/
+.hero_content{
+  background-color: rgba(255, 255, 255, 0.7);
+  border: 3px solid rgb(0, 0, 0, 0.40);
+  border-radius: 1rem;
+  padding: 4rem;
 }
-/*--------------------------------------*/
-
 
 .hero_content h1{
-  font-size: 10rem;
+  font-size: clamp(3rem, 12vw, 10rem); /*plynulá změna velikosti. Minimální, ideální, maximální*/
   margin: 0.5rem 0;
-  max-width: 800px;
+  max-width: 1200px;
   text-shadow: 0 4px 18px rgba(0, 0, 0, 0.5);
   font-family: 'Tangerine', cursive;
 }
 
 .hero_content p{
-  font-size: 1.2rem;
+  font-size: clamp(1rem, 3vw, 1.5rem);
   margin: 0.5rem 0; /*Vnější odsazení*/
   text-shadow: 0 4px 18px rgba(0, 0, 0, 0.5);
 }
 
-
+/*--------------------------------------*/
 
 .journey{
   padding: 4rem 2rem; /*Vnitřní odszaení*/
@@ -70,6 +65,7 @@
 }
 
 
+/*--------------------------------------*/
 
 .wedding_info{
   padding: 4rem 2rem; /*Vnitřní odszaení*/
@@ -111,6 +107,7 @@
   transform: scale(0.98);
 }
 
+/*--------------------------------------*/
 
 .form{
   padding: 4rem 2rem; /*Vnitřní odszaení*/
@@ -122,4 +119,22 @@
   max-width: 1000px;
   margin: 0 auto; /*doprostřed stránky zarovnání*/
   text-align: center;
+}
+
+
+/*--------------------------------------*/
+
+@media (max-width: 768px){
+  .wedding_info_cards{
+    flex-direction: column;
+  }
+  .hero{
+    padding: 1rem;
+    background-position: center;
+    height: 120px;
+  }
+  .hero_content{
+    max-width: 100%;
+    padding: 2rem;
+  }
 }
