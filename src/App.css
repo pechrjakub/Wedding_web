@@ -45,6 +45,36 @@
 }
 
 /*--------------------------------------*/
+.countdown{
+  padding: 4rem 2rem; /*Vnitřní odszaení*/
+  background-color: #fff7f3;
+  text-align: center;
+  color: #2f2522
+}
+
+.countdown_content{
+  max-width: 800px;
+  margin: 0 auto; /*doprostřed stránky zarovnání*/
+  text-align: center;
+}
+
+.countdown_cards{
+  display: flex;
+  gap: 2rem;
+  margin-top: 2rem;
+  justify-content: center;
+}
+
+.countdown_card{
+  background-image: url('/images/Pozadi.jpg');
+  background-size: cover;
+  border: 1px solid #000000;
+  padding: 2rem;
+  border-radius: 1rem;
+  flex: 1;
+}
+
+/*--------------------------------------*/
 
 .journey{
   padding: 4rem 2rem; /*Vnitřní odszaení*/
@@ -136,5 +166,8 @@
   .hero_content{
     max-width: 100%;
     padding: 2rem;
+  }
+  .countdown_cards{
+    flex-direction: column;
   }
 }
