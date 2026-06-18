@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import CountdownCard from "./CountdownCard";
 
-const weddingDate = new Date('2026-09-26T13:00:00');
+const weddingDate = new Date('2026-09-26T12:00:00');
 
 
 function Countdown(){

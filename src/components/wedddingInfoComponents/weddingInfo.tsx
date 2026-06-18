@@ -22,9 +22,9 @@ function handleNextColor() { /* Pokud je spuštěna tato funkce, vezmi předchoz
                 lines={card.lines}
               />
             ))}
-            <button 
+            <button  
               className="wedding_info_card wedding_info_color_card"
-              style={{ backgroundColor: selectedColor.hexcolor }}
+              style={{ backgroundColor: selectedColor.hexcolor }} 
               onClick={handleNextColor}
             >
               <h1>{selectedColor.description}</h1>
