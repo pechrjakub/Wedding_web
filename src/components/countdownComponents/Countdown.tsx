@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useEffect } from "react";
 import CountdownCard from "./CountdownCard";
 
@@ -8,7 +8,9 @@ const weddingDate = new Date('2026-09-26T12:00:00');
 function Countdown(){
     const [now, setNow] = useState(new Date());
     const difference = weddingDate.getTime() - now.getTime(); /*getTime to hodí na milisekundy*/
-    const days_left = Math.floor(difference / (1000 * 60 * 60 * 24)); /*tady dělím milisekundy na dny*/
+        
+    const days_left = useMemo(() => Math.floor(difference / (1000 * 60 * 60 * 24)) /*tady dělím milisekundy na dny*/, [now]);
+
     const hours_left = Math.floor((difference /(1000 * 60 * 60)) % 24); /*%24 vrátí zbytek po dělení 24 (hodiny)*/
     const minutes_left = Math.floor((difference / (1000 * 60)) % 60);
     const seconds_left = Math.floor((difference / 1000) % 60);
