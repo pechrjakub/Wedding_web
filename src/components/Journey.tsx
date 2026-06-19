@@ -1,3 +1,4 @@
+
 function Journey(){
     return(
       <section id="intro" className='journey'>
