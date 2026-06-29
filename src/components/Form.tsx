@@ -1,77 +1,61 @@
-import {useState} from 'react';
+import { useForm } from 'react-hook-form';
+import type { SubmitHandler } from 'react-hook-form';
+import React from 'react';
 
-function Form(){
-   
-const [guestName, setGuestName] = useState('');
-const [guestNameError, setGuestNameError] = useState('');
-const [attendance, setAttendance] = useState('');
-const [guestCount, setGuestCount] = useState('1');
-const [foodAlergies, setFoodAlergies] = useState('');
-
-function handleSubmit(e: React.FormEvent<HTMLFormElement>){ /* e je proměnná typu události formuláře, konkrétně HTML formuláře. Je to tam kvůli preventDefault, aby TS věděl*/
-  e.preventDefault(); //Zabrání tomu, že se stránka reloaduje po kliknutí na tlačítko
-
-  if (guestName.trim() === "") { /*trim() odstraní vsechny mezerové znaky z základního textu*/
-    setGuestNameError("Zadejte jmeno");
-    return;
-  }
-
-  console.log("Já: ", guestName);
-  console.log("Dorazím: ", attendance);
-  console.log("Bude nás: ", guestCount);
-  console.log("Jsem alergik na: ", foodAlergies);
+type FormData ={
+  name: string;
+  attendance: 'yes' | 'no';
+  guestCount: number;
+  allergies: string;
+  songRequest: string;
 }
 
+function Form(){
+  
+const { register, handleSubmit, formState: { errors }, watch, unregister} = useForm<FormData>({
+  defaultValues: {
+    name: '',
+    attendance: 'yes',
+    guestCount: 1,
+    allergies: '',
+    songRequest: '',
+  },
+});
+
+const attendanceState = watch('attendance');
+
+const onSubmit: SubmitHandler<FormData> = (data) => {
+  console.log("Odeslaná data:", data);
+};
+
+React.useEffect(() => {
+  if (attendanceState === 'no') {
+    unregister(['guestCount', 'allergies', 'songRequest']);
+  }
+}, [unregister, attendanceState]);
 
 return(
       <section className="form">
         <div className="form_content">
+
           <h1>Dejte nám vědět, jestli dorazíte</h1> 
 
-          <form onSubmit={handleSubmit}> 
-            <label>
-              Vaše jméno?
-              <input
-                type="text"
-                placeholder="Jméno hosta"
-                value={guestName}
-                onChange={(e) => setGuestName(e.target.value)}/> 
-            </label>
-
-            {guestNameError && (
-              <p className="form_error">{guestNameError}</p>
-            )}
-
-            <label>
-              Dorazíte?
-              <select value={attendance} onChange={(e) => setAttendance(e.target.value)}>
-                <option value="yes">Ano</option>
-                <option value="no">Ne</option>
-              </select>
-            </label>
-
-            {attendance === "yes" && (
-              <label>
-                Kolik Vás bude?
-                <input
-                  type="number"
-                  min="1"
-                  max="5"
-                  value={guestCount}
-                  onChange={(e) => setGuestCount(e.target.value)}/>
-              </label>
-            )}
-
-            <label>
-              Máš nějaké alergie?
-              <textarea
-                value={foodAlergies}
-                onChange={(e) => setFoodAlergies(e.target.value)}/>
-            </label>
-            <button type="submit">Odeslat</button>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <input {...register('name', {required: true})} placeholder='Jméno'/>
+            {errors.name && <p className='error'>Vyplněte své jmeno</p>}
+            <select {...register("attendance", { required: true })}>
+              <option value="yes">Ano</option>
+              <option value="no">Ne</option>
+            </select>
+            {attendanceState === 'yes' && (
+              <div className="attendee_details">
+                <input min={1} max={10} type="number" placeholder="Počet hostů" {...register("guestCount", {required: true, max: 10, min: 1})} />
+                <input maxLength={50} type="text" placeholder="Máš nějaké alergie?" {...register("allergies", { maxLength: 50})} />
+                <input maxLength={100} type="text" placeholder="Nějaký song, co bys chtěl zahrát?" {...register("songRequest", { maxLength: 100})} />
+              </div>)}
+            <input type="submit"/>
+          
           </form>
-
-          <p>Tvoje jméno je {guestName}</p>
         </div>
       </section>
     );
