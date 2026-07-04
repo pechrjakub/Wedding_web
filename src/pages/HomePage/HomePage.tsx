@@ -1,4 +1,4 @@
-import '../../App.css';
+import './HomePage.css';
 import Hero from '../../components/Hero';
 import Journey from '../../components/Journey';
 import Wedding_info from '../../components/wedddingInfoComponents/weddingInfo';
@@ -7,7 +7,7 @@ import Countdown from '../../components/countdownComponents/Countdown';
 
 function App() {
   return (
-    <main className="page">
+    <main>
       <Hero />
       <Countdown />
       <Journey />
