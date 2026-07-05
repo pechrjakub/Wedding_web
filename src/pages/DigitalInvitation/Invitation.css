@@ -1,21 +1,85 @@
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600&family=Sacramento&display=swap");
+
+/* =========================================================
+   0) BARVY OBÁLKY
+   ---------------------------------------------------------
+   Hlavní barva obálky je definovaná jednou proměnnou.
+   Ostatní části se z ní dynamicky zesvětlují/ztmavují.
+========================================================= */
+
+:root {
+  --envelope-color: #E5DECA;
+
+  --envelope-side-color: color-mix(in srgb, var(--envelope-color) 88%, #000);
+  --envelope-bottom-color: color-mix(in srgb, var(--envelope-color) 78%, #000);
+  --envelope-top-color: var(--envelope-color);
+  --envelope-text-color: color-mix(in srgb, var(--envelope-color) 45%, #000);
+}
+
+/* =========================================================
+   1) STRÁNKA DIGITÁLNÍHO OZNÁMENÍ
+   ---------------------------------------------------------
+   Celá animační stránka zabere celý viewport.
+   `position: fixed` a `overflow: hidden` zabraňují scrollu
+   a cuknutí stránky při vyjíždění oznámení.
+========================================================= */
+
 .digital-invitation-page {
-  background: #f6efe7;
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100dvh;
+  background:  #E0E6EF; /*Zesvětlená #AABBD5 o 50%*/
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
 }
 
+
+/* =========================================================
+   2) OVERLAY / ZATMAVENÍ OKOLÍ
+   ---------------------------------------------------------
+   Overlay se zobrazí až ve finálním stavu,
+   kdy je oznámení nebo QR kód v popředí.
+========================================================= */
+
+.invitation-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(25, 18, 12, 0.42);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 350ms ease;
+  z-index: 1;
+}
+
+.invitation-overlay--visible {
+  opacity: 1;
+}
+
+
+/* =========================================================
+   3) SCÉNA A KLIKACÍ OBÁLKA
+   ---------------------------------------------------------
+   Scéna drží obálku uprostřed stránky.
+   `perspective` vytváří prostor pro 3D otočení.
+========================================================= */
+
 .invitation-scene {
+  position: relative;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   perspective: 1200px;
   overflow: visible;
+  z-index: 2;
 }
 
 /* Celé klikací tlačítko obálky */
 .envelope {
+  position: relative;
   width: 540px;
   height: 345px;
   padding: 0;
@@ -23,9 +87,18 @@
   background: transparent;
   cursor: pointer;
   perspective: 1200px;
+  z-index: 3;
 }
 
-/* Vnitřní karta, která se otáčí */
+
+/* =========================================================
+   4) VNITŘNÍ KARTA OBÁLKY A 3D OTOČENÍ
+   ---------------------------------------------------------
+   `.envelope__card` je prvek, který se reálně otáčí.
+   Když React přidá třídu `.envelope--flipped`,
+   karta se otočí o 180 stupňů.
+========================================================= */
+
 .envelope__card {
   position: relative;
   width: 100%;
@@ -34,12 +107,19 @@
   transition: transform 900ms ease;
 }
 
-/* Otočení celé obálky */
 .envelope--flipped .envelope__card {
   transform: rotateY(180deg);
 }
 
-/* Společný základ pro obě strany */
+
+/* =========================================================
+   5) SPOLEČNÝ ZÁKLAD PRO OBĚ STRANY OBÁLKY
+   ---------------------------------------------------------
+   Obě strany leží přesně přes sebe.
+   `backface-visibility: hidden` schová zadní plochu
+   při 3D otočení.
+========================================================= */
+
 .envelope__side {
   position: absolute;
   inset: 0;
@@ -49,39 +129,73 @@
   backface-visibility: hidden;
 }
 
-/* Zadní strana se jménem příjemce */
+
+/* =========================================================
+   6) ZADNÍ STRANA OBÁLKY
+   ---------------------------------------------------------
+   První viditelná strana.
+   Obsahuje jméno příjemce.
+========================================================= */
+
 .envelope__side--back {
-  background: #d8b98c;
+  background: var(--envelope-color);
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: hidden;
 }
 
-/* Přední strana je schovaná, dokud se obálka neotočí */
+/* Jméno příjemce */
+.envelope__recipient {
+  margin: 0;
+  color: #5f4225;
+  font-family: Sacramento, cursive;
+  font-size: 4rem;
+  font-weight: 500;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+
+/* =========================================================
+   7) PŘEDNÍ STRANA OBÁLKY
+   ---------------------------------------------------------
+   Druhá strana obálky.
+   Je otočená o 180 stupňů, aby se ukázala až po otočení
+   celé `.envelope__card`.
+========================================================= */
+
 .envelope__side--front {
-  background: #d8b98c;
+  background: transparent;
   transform: rotateY(180deg);
   overflow: visible;
   transform-style: preserve-3d;
-  visibility: hidden;
 }
 
-/* Přední strana se ukáže až po otočení obálky */
-.envelope--flipped .envelope__side--front {
-  visibility: visible;
-}
-
-/* Tělo přední strany - drží zaoblené rohy */
+/* Tělo přední strany obálky */
 .envelope__front-shape {
   position: absolute;
   inset: 0;
-  overflow: hidden;
-  background: #d8b98c;
-  z-index: 0;
+  background: var(--envelope-color);
+  z-index: 5;
+  overflow: visible;
 }
 
-/* Vnitřek obálky – obrázek se ukáže až po otevření */
+/* Ve finálním stavu je přední část výš, aby mohlo oznámení vystoupit do popředí */
+.envelope--revealed .envelope__front-shape {
+  overflow: visible;
+  z-index: 10;
+}
+
+
+/* =========================================================
+   8) VNITŘEK OBÁLKY
+   ---------------------------------------------------------
+   Obrázek uvnitř obálky.
+   Je skrytý, dokud se obálka neotevře.
+========================================================= */
+
 .envelope__inside {
   position: absolute;
   inset: 0;
@@ -95,37 +209,181 @@
   clip-path: inset(0 3% 0 3%);
 }
 
-/* Po otevření obálky se zobrazí obrázek uvnitř */
+/* Po otevření obálky se ukáže vnitřní obrázek */
 .envelope--open .envelope__inside {
   opacity: 1;
 }
 
-/* Jméno příjemce */
-.envelope__recipient {
-  margin: 0;
-  color: #5f4225;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 2rem;
-  font-weight: 500;
-  text-align: center;
-  position: relative;
+
+/* =========================================================
+   9) OKNO PRO VYJÍŽDĚJÍCÍ OZNÁMENÍ
+   ---------------------------------------------------------
+   Tohle je důležitý trik.
+   Okno sahá vysoko nad obálku, takže oznámení může vyjet nahoru.
+   Zároveň má `overflow: hidden`, takže oznámení neprosvítá dole
+   pod obálkou.
+========================================================= */
+
+.envelope__letter-window {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -700px;
+  bottom: 0;
+  z-index: 2;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* Ve finálním stavu už může oznámení vystoupit mimo obálku */
+.envelope--revealed .envelope__letter-window {
+  overflow: visible;
+  z-index: 30;
+}
+
+
+/* =========================================================
+   10) OZNÁMENÍ
+   ---------------------------------------------------------
+   Samotná fotka oznámení je nejdřív schovaná uvnitř obálky.
+   Ve stavu `.envelope--letter` vyjede z kapsy obálky.
+   Ve stavu `.envelope--revealed` se zvětší a přejde do popředí.
+========================================================= */
+
+/* Wrapper oznámení – drží stín pro obě strany kartičky */
+.envelope__invitation-shell {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 74%;
+  transform: translateX(-50%) translateY(105%);
+  opacity: 0;
+  z-index: 2;
+  pointer-events: none;
+  filter: drop-shadow(0 18px 40px rgba(0, 0, 0, 0.22));
+  transition:
+    transform 900ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 250ms ease;
+}
+
+/* Po otevření obálky je oznámení stále schované */
+.envelope--open .envelope__invitation-shell {
+  opacity: 0;
+  transform: translateX(-50%) translateY(105%);
+}
+
+/* Mezistav – oznámení vyjíždí z kapsy obálky */
+.envelope--letter .envelope__invitation-shell {
+  opacity: 1;
+  transform: translateX(-50%) translateY(5%); /* Tady se upravuje výška, kam oznámení vyjede z obálky */
   z-index: 2;
 }
 
-/* Společný základ pro klopy */
+/* Finální stav – oznámení jde do popředí */
+.envelope--revealed .envelope__invitation-shell {
+  opacity: 1;
+  transform: translateX(-50%) translateY(20%) scale(1.2); /* Tady se upravuje finální poloha oznámení */
+  z-index: 30;
+}
+
+/* Samotný obrázek oznámení */
+.envelope__invitation {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  background: white;
+}
+
+/* =========================================================
+   10.1) OTOČNÁ KARTA OZNÁMENÍ / QR
+   ---------------------------------------------------------
+   Uvnitř vysunutého oznámení jsou dvě strany:
+   přední strana = fotka oznámení
+   zadní strana = bílá plocha s QR kódem
+
+   Ve stavu `.envelope--qr` se karta otočí.
+========================================================= */
+
+.invitation-card {
+  position: relative;
+  width: 100%;
+  transform-style: preserve-3d;
+  transition: transform 900ms ease;
+}
+
+.envelope--qr .invitation-card {
+  transform: rotateY(180deg);
+}
+
+.invitation-card__side {
+  width: 100%;
+  backface-visibility: hidden;
+}
+
+.invitation-card__side--front {
+  position: relative;
+}
+
+.invitation-card__side--back {
+  position: absolute;
+  inset: 0;
+  background: #ffffff;
+  transform: rotateY(180deg);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+  padding: 28px;
+  box-sizing: border-box;
+  filter: drop-shadow(0 18px 40px rgba(0, 0, 0, 0.22));
+}
+
+.invitation-card__qr {
+  width: 70%;
+  height: auto;
+  display: block;
+}
+
+.invitation-card__qr-text {
+  margin: 0;
+  color: #AABBD5;
+  font-family: "Quicksand", serif;
+  font-size: 0.95rem;
+  text-align: center;
+  line-height: 1.4;
+}
+
+/* =========================================================
+   11) SPOLEČNÝ ZÁKLAD PRO KLOPY OBÁLKY
+   ---------------------------------------------------------
+   Každá klopa je původně obdélník.
+   Tvar trojúhelníku vzniká přes `clip-path`.
+========================================================= */
+
 .envelope__flap {
   position: absolute;
   width: 100%;
   height: 100%;
-  background: #cfae7e;
+  background: var(--envelope-side-color);
 }
+
+
+/* =========================================================
+   12) LEVÁ, PRAVÁ A SPODNÍ KLOPA
+   ---------------------------------------------------------
+   Tyto tři části tvoří kapsu obálky.
+   Jsou nad oznámením, aby oznámení působilo,
+   že opravdu vyjíždí zevnitř.
+========================================================= */
 
 /* Levý trojúhelník */
 .envelope__flap--left {
   clip-path: polygon(0 0, 50% 50%, 0 100%);
   left: 0;
   top: 0;
-  z-index: 2;
+  z-index: 4;
 }
 
 /* Pravý trojúhelník */
@@ -133,7 +391,7 @@
   clip-path: polygon(100% 0, 50% 50%, 100% 100%);
   right: 0;
   top: 0;
-  z-index: 2;
+  z-index: 4;
 }
 
 /* Spodní trojúhelník */
@@ -141,20 +399,29 @@
   clip-path: polygon(0 100%, 50% 50%, 100% 100%);
   left: 0;
   bottom: 0;
-  background: #c49f6b;
-  z-index: 3;
+  background: var(--envelope-bottom-color);
+  z-index: 5;
 }
 
-/* Horní otevírací trojúhelník */
+
+/* =========================================================
+   13) HORNÍ OTEVÍRACÍ KLOPA
+   ---------------------------------------------------------
+   Tohle je horní trojúhelník obálky.
+   Při otevření se překlopí přes `rotateX(180deg)`.
+========================================================= */
+
 .envelope__flap--top {
   left: 0;
   top: 0;
   z-index: 4;
-  background: #d8b98c;
+  background: var(--envelope-top-color);
   clip-path: polygon(0 0, 50% 58%, 100% 0);
   transform-origin: top center;
   transform: rotateX(0deg);
-  transition: transform 900ms ease, z-index 0ms linear 450ms;
+  transition:
+    transform 900ms ease,
+    z-index 0ms linear 450ms;
 }
 
 /* Obrázek na horní otevírací klopě – zmenšení přes scale vytváří okraj */
@@ -174,7 +441,7 @@
   transition-delay: 200ms;
 }
 
-/* Obrázek na horní klopě se ukáže až po otevření */
+/* Po otevření se na horní klopě ukáže obrázek */
 .envelope--open .envelope__flap--top::after {
   opacity: 1;
 }
@@ -185,7 +452,22 @@
   z-index: 1;
 }
 
-/* Pečeť - základně neviditelná */
+/* Jakmile začne vyjíždět oznámení, horní klopa už nepřekáží */
+.envelope--letter .envelope__flap--top,
+.envelope--revealed .envelope__flap--top {
+  z-index: 0;
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   14) PEČEŤ
+   ---------------------------------------------------------
+   Pečeť je základně skrytá.
+   Ukáže se až na přední zavřené straně obálky.
+   Po otevření opět zmizí.
+========================================================= */
+
 .envelope__seal {
   position: absolute;
   left: 50%;
@@ -198,7 +480,9 @@
   pointer-events: none;
   opacity: 0;
   filter: drop-shadow(0 8px 10px rgba(70, 45, 25, 0.25));
-  transition: opacity 400ms ease, transform 400ms ease;
+  transition:
+    opacity 400ms ease,
+    transform 400ms ease;
   transition-delay: 0ms;
 }
 
