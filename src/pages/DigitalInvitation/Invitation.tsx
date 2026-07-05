@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { supabase } from "../../../lib/supabaseClient";
 import "./Invitation.css";
 
 type InvitationStep =
@@ -10,16 +12,51 @@ type InvitationStep =
   | "qr";
 
 function DigitalInvitation() {
+  const { slug } = useParams();
+
   const [invitationStep, setInvitationStep] = useState<InvitationStep>("back");
+  const [recipientName, setRecipientName] = useState<string | null>(null);
 
-  const recipientName = "Václav Malina";
+  useEffect(() => {
+    async function loadRecipientName() {
+      if (!slug) {
+        return;
+      }
+      console.log("Slug z URL", slug);
+      if (!supabase) { /*Zobrazí stránku, i když není supabase ještě napojená*/
+      console.warn("Supabase není nastavená – používám výchozí jméno.");
+      return;
+      }
 
-  const isFlipped =
-    invitationStep === "front" ||
-    invitationStep === "open" ||
-    invitationStep === "letter" ||
-    invitationStep === "revealed" ||
-    invitationStep === "qr";
+      const { data, error } = await supabase
+        .from("invitations")
+        .select("recipient_name")
+        .eq("slug", slug)
+        .eq("is_active", true)
+        .maybeSingle();
+
+      if (error) {
+        console.error("Nepodařilo se načíst oznámení:", error);
+        return;
+      }
+      
+      if (!data) {
+        
+        return;
+      }
+
+      setRecipientName(data.recipient_name);
+    }
+
+    loadRecipientName();
+  }, [slug]);
+
+const isFlipped =
+  invitationStep === "front" ||
+  invitationStep === "open" ||
+  invitationStep === "letter" ||
+  invitationStep === "revealed" ||
+  invitationStep === "qr";
 
 const isOpen =
   invitationStep === "open" ||
