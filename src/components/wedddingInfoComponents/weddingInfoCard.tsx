@@ -1,3 +1,5 @@
+import { weddingInfoCard} from "./weddingInfo";
+
 type WeddingInfoCardsProps = { /*Slouží to k určení typu dat, aby to nedělalo bordel*/
   title: string;
   lines: string[];
@@ -5,7 +7,7 @@ type WeddingInfoCardsProps = { /*Slouží to k určení typu dat, aby to neděla
 
 function WeddingInfoCards({ title, lines }: WeddingInfoCardsProps) { /*funkce si vezme props z CardsProp*/
   return (
-    <div className="wedding_info_card">
+    <div style={weddingInfoCard}>
       <h2>{title}</h2>
       {lines.map((line) => (
         <p key={line}>{line}</p>

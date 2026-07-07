@@ -1,6 +1,20 @@
 import { useForm } from 'react-hook-form';
 import type { SubmitHandler } from 'react-hook-form';
 import React from 'react';
+import type { CSSProperties } from "react";
+
+const styles: Record<string, CSSProperties> = {
+  form:{
+    padding: "4rem 2rem", /*Vnitřní odszaení*/
+    backgroundColor: "#fff7f3",
+    color: "#2f2522",
+  },
+  formContent:{
+    maxWidth: "1000px",
+    margin: "0 auto", /*doprostřed stránky zarovnání*/
+    textAlign: "center",
+  },
+}
 
 type FormData ={
   name: string;
@@ -35,8 +49,8 @@ React.useEffect(() => {
 }, [unregister, attendanceState]);
 
 return(
-      <section className="form">
-        <div className="form_content">
+      <section style={styles.form}>
+        <div style={styles.formContent}>
 
           <h1>Dejte nám vědět, jestli dorazíte</h1> 
 
