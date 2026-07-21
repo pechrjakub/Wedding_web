@@ -2,7 +2,7 @@ import type { CSSProperties } from "react";
 
 const styles: Record<string, CSSProperties> = {
   hero: {
-    minHeight: "760px", 
+    minHeight: "100dvh", 
     display: "flex", /*"automatické" rozložení obsahu*/
     alignItems: "center", /*svisle na střed*/
     justifyContent: "center", /*vodorovně na střed*/

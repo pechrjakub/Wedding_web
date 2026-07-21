@@ -1,7 +1,8 @@
 import { useForm } from 'react-hook-form';
-import type { SubmitHandler } from 'react-hook-form';
+/*import type { SubmitHandler } from 'react-hook-form';*/
 import React from 'react';
 import type { CSSProperties } from "react";
+import { supabase } from "../../lib/supabaseClient";
 
 const styles: Record<string, CSSProperties> = {
   form:{
@@ -38,9 +39,22 @@ const { register, handleSubmit, formState: { errors }, watch, unregister} = useF
 
 const attendanceState = watch('attendance');
 
-const onSubmit: SubmitHandler<FormData> = (data) => {
-  console.log("Odeslaná data:", data);
+const onSubmit = async (data: FormData) => { /*Async zde mám, protože ta funkce bude trvat delší dobu*/
+  const {error} = await supabase.from("wedding_form").insert({ /*await čeká na odpověď databáze*/
+    name: data.name,
+    attendance: data.attendance,
+    guest_count: Number(data.guestCount), /*Pojistka, že opravdu odesílám čáslo*/
+    allergies: data.allergies || null, 
+    requested_song: data.songRequest || null,
+  });
+
+  if (error) {
+    console.error("Chyba odeslání formuláře: ", error.message);
+    return;
+  }
+  console.log("Data úspěšně odeslána");
 };
+
 
 React.useEffect(() => {
   if (attendanceState === 'no') {
