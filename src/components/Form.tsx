@@ -2,7 +2,9 @@ import { useForm } from 'react-hook-form';
 /*import type { SubmitHandler } from 'react-hook-form';*/
 import React from 'react';
 import type { CSSProperties } from "react";
+import { useState } from 'react';
 import { supabase } from "../../lib/supabaseClient";
+import SuccessModal from './successModal';
 
 const styles: Record<string, CSSProperties> = {
   form:{
@@ -38,7 +40,7 @@ const { register, handleSubmit, formState: { errors }, watch, unregister} = useF
 });
 
 const attendanceState = watch('attendance');
-
+const [modalState, setModalState] = useState (false);
 const onSubmit = async (data: FormData) => { /*Async zde mám, protože ta funkce bude trvat delší dobu*/
   const {error} = await supabase.from("wedding_form").insert({ /*await čeká na odpověď databáze*/
     name: data.name,
@@ -53,6 +55,7 @@ const onSubmit = async (data: FormData) => { /*Async zde mám, protože ta funkc
     return;
   }
   console.log("Data úspěšně odeslána");
+  setModalState(true);
 };
 
 
@@ -84,6 +87,12 @@ return(
             <input type="submit"/>
           
           </form>
+          {modalState && (
+            <SuccessModal
+            isOpen={modalState}
+            onClose={() => setModalState(false)}
+          />
+          )}
         </div>
       </section>
     );
