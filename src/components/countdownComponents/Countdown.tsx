@@ -6,22 +6,39 @@ import type { CSSProperties } from "react";
 const styles: Record<string, CSSProperties> = {
     countdown:{
     padding: "4rem 2rem", /*Vnitřní odszaení*/
-    backgroundColor: "#fff7f3",
+    backgroundColor: "#FFF7F3",
     textAlign: "center",
+    minHeight: "40dvh",
     color: "#2f2522",
-    /*margin: 0 2rem;*/
     },
     countdownContent:{
-    maxWidth: "800px",
+    maxWidth: "700px",
     margin: "0 auto", /*doprostřed stránky zarovnání*/
-    textAlign: "center",
     },
     countdownDeckOfCards:{
     display: "flex",
-    gap: "2rem",
+    gap: "1rem",
     marginTop: "2rem",
     justifyContent: "center",
+    alignItems: "center",
     },
+}
+
+type CzechCountdownWords = {
+    one: string,
+    few: string,
+    many: string,
+}
+
+function makeCzech(value: number, words: CzechCountdownWords){
+    if (value === 1){
+        return words.one;
+    }
+    if (value >=2 && value <= 4){
+        return words.few;
+    }
+
+    return words.many;
 }
 
 const weddingDate = new Date('2026-09-26T12:00:00');
@@ -42,10 +59,10 @@ function Countdown(){
     }, [now]);
     
     const countdownNumbers = [
-        {label: 'dní', value: days_left},
-        {label: 'hodin', value: hours_left},
-        {label: 'minut', value: minutes_left},
-        {label: 'sekund', value: seconds_left},
+        {label: makeCzech(days_left, {one: 'den', few: 'dny', many: 'dni'}), value: days_left},
+        {label: makeCzech(hours_left, {one: 'hodina', few: 'hodiny', many: 'hodin'}), value: hours_left},
+        {label: makeCzech(minutes_left, {one: 'minuta', few: 'minuty', many: 'minut'}), value: minutes_left},
+        {label: makeCzech(seconds_left, {one: 'sekunda', few: 'sekundy', many: 'sekund'}), value: seconds_left},
     ];
     
 
@@ -59,7 +76,7 @@ function Countdown(){
 
     return(
     <section id="countdown" style={styles.countdown}>
-        <h2>Do svatby zbývá</h2>
+        <h2>Za tak dlouho se bereme</h2>
         <div style={styles.countdownContent}>
             <div className="countdownDeckOfCards" style={styles.countdownDeckOfCards}>
                 {countdownNumbers.map((time) => (

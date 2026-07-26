@@ -9,13 +9,34 @@ import SuccessModal from './successModal';
 const styles: Record<string, CSSProperties> = {
   form:{
     padding: "4rem 2rem", /*Vnitřní odszaení*/
-    backgroundColor: "#fff7f3",
+    backgroundColor: "#FFF7F3",
     color: "#2f2522",
   },
   formContent:{
     maxWidth: "1000px",
     margin: "0 auto", /*doprostřed stránky zarovnání*/
     textAlign: "center",
+  },
+  formH1:{
+    fontSize: "1.5rem",
+    color: "#D289C3",
+    paddingBottom: "2rem",
+  },
+  formInput:{
+    border: "1px solid #000000",
+    height: "2rem",
+    width: "100%",
+    maxWidth: "500px",
+    borderRadius: "0.5rem",
+    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.5)",
+  },
+  formRSVP:{
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: "1rem",
+    width: "100%",
   },
 }
 
@@ -32,7 +53,7 @@ function Form(){
 const { register, handleSubmit, formState: { errors }, watch, unregister} = useForm<FormData>({
   defaultValues: {
     name: '',
-    attendance: 'yes',
+    attendance: 'no',
     guestCount: 1,
     allergies: '',
     songRequest: '',
@@ -41,8 +62,8 @@ const { register, handleSubmit, formState: { errors }, watch, unregister} = useF
 
 const attendanceState = watch('attendance');
 const [modalState, setModalState] = useState (false);
-const onSubmit = async (data: FormData) => { /*Async zde mám, protože ta funkce bude trvat delší dobu*/
-  const {error} = await supabase.from("wedding_form").insert({ /*await čeká na odpověď databáze*/
+const onSubmit = async (data: FormData) => { /*Async zde mám, protože ta funkce bude trvat delší dobu = čekám na odpověď databáze.*/
+  const {error} = await supabase.from("wedding_form").insert({ /*{error} = z celého objektu si vem jen error. await čeká na odpověď databáze, musí být v async funkci*/
     name: data.name,
     attendance: data.attendance,
     guest_count: Number(data.guestCount), /*Pojistka, že opravdu odesílám čáslo*/
@@ -69,20 +90,20 @@ return(
       <section style={styles.form}>
         <div style={styles.formContent}>
 
-          <h1>Dejte nám vědět, jestli dorazíte</h1> 
+          <h1 style={styles.formH1}>Dejte nám vědět, jestli dorazíte</h1> 
 
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <input {...register('name', {required: true})} placeholder='Jméno'/>
+          <form onSubmit={handleSubmit(onSubmit)} style={styles.formRSVP}>
+            <input {...register('name', {required: true})} placeholder='Jméno'style={styles.formInput}/>
             {errors.name && <p className='error'>Vyplněte své jmeno</p>}
             <select {...register("attendance", { required: true })}>
               <option value="yes">Ano</option>
               <option value="no">Ne</option>
             </select>
             {attendanceState === 'yes' && (
-              <div className="attendee_details">
+              <div className="attendee_details" style={styles.formRSVP}>
                 <input min={1} max={10} type="number" placeholder="Počet hostů" {...register("guestCount", {required: true, max: 10, min: 1})} />
-                <input maxLength={50} type="text" placeholder="Máš nějaké alergie?" {...register("allergies", { maxLength: 50})} />
-                <input maxLength={100} type="text" placeholder="Nějaký song, co bys chtěl zahrát?" {...register("songRequest", { maxLength: 100})} />
+                <input maxLength={50} type="text" placeholder="Máš nějaké alergie?" {...register("allergies", { maxLength: 50})} style={styles.formInput}/>
+                <input maxLength={100} type="text" placeholder="Nějaký song, co bys chtěl zahrát?" {...register("songRequest", { maxLength: 100})} style={styles.formInput}/>
               </div>)}
             <input type="submit"/>
           

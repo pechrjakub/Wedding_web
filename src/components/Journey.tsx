@@ -3,8 +3,9 @@ import type { CSSProperties } from "react";
 const styles: Record<string, CSSProperties> = {
   journey: {
     padding: "4rem 2rem",
-    backgroundColor: "#fff7f3",
+    backgroundColor: "#E0E6EF",
     color: "#2f2522",
+    minHeight: "50dvh",
   },
   journeyContent: {
     maxWidth: "900px",
@@ -12,7 +13,7 @@ const styles: Record<string, CSSProperties> = {
     textAlign: "center",
   },
   journeyLabel: {
-    fontSize: "4rem",
+    fontSize: "3rem",
     textTransform: "uppercase",
     color: "#D289C3",
   }
@@ -21,8 +22,7 @@ function Journey(){
     return(
       <section style={styles.journey}>
         <div style={styles.journeyContent}>
-          <h1 style={styles.journeyLabel}>Něco málo o nás</h1> 
-          <p className="journey_text">Tady je ten text</p>
+          <h1 style={styles.journeyLabel}>Naše společná cesta životem</h1> 
         </div>
       </section>
     );

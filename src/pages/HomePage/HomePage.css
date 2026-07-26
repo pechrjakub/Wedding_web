@@ -13,17 +13,12 @@
 /*--------------------------------------*/
 
 @media (max-width: 768px){
-  .weddingInfoDeckOfCards{
-    flex-direction: column;
-  }
   .hero{
     padding: 1rem;
     background-position: center;
-    height: 120px;
   }
   .heroContent{
     max-width: 100%;
-    padding: 2rem;
   }
   .countdownDeckOfCards{
     flex-direction: column;

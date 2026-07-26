@@ -15,7 +15,7 @@ const styles: Record<string, CSSProperties> = {
         width: "400px",
         border: "1px solid rgb(0, 0, 0, 0.40)",
         borderRadius: "1rem",
-        backgroundColor: "#fff7f3",
+        backgroundColor: "#FFF7F3",
 
         display: "flex",
         flexDirection: "column",

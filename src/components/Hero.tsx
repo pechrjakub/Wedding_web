@@ -8,14 +8,16 @@ const styles: Record<string, CSSProperties> = {
     justifyContent: "center", /*vodorovně na střed*/
     textAlign: "center",
 
-    backgroundImage: "url('/images/Uvodni_foto.JPG')",
+    backgroundImage: "url('/images/Uvodni_foto.JPEG')",
     backgroundSize: "cover", /*Obrázek vyplní celou část*/
     backgroundPosition: "center", /*Střed obrázku na středu*/
     backgroundRepeat: "no-repeat", /*Obrázek nebude jak dlaždice*/
 
-    color: "#FFFFFF",
+    
     position: "relative", /*vše, co bude v hero jako absolute, tak se podřídí .hero*/
     padding: "2rem",
+    color: "#FFFFFF",
+    textShadow: "0 4px 18px rgba(0, 0, 0, 0.5)",
   },
   heroContent: {
     backgroundColor: "rgba(255, 255, 255, 0.7)",
@@ -27,13 +29,12 @@ const styles: Record<string, CSSProperties> = {
     fontSize: "clamp(3rem, 12vw, 10rem)", /*plynulá změna velikosti. Minimální, ideální, maximální*/
     margin: "0.5rem 0",
     maxWidth: "1200px",
-    textShadow: "0 4px 18px rgba(0, 0, 0, 0.5)",
+    
     fontFamily: "'Tangerine', cursive",
   },
   heroP:{
     fontSize: "clamp(1rem, 3vw, 1.5rem)",
     margin: "0.5rem 0", /*Vnější odsazení*/
-    textShadow: "0 4px 18px rgba(0, 0, 0, 0.5)",
   },
   heroArrowA: { /*Styl nalezen online*/
     position: "absolute",
