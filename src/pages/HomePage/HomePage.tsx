@@ -1,6 +1,6 @@
 import './HomePage.css';
 import Hero from '../../components/Hero';
-import Journey from '../../components/Journey';
+import Journey from '../../components/journeyComponents/Journey';
 import Form from '../../components/Form';
 import Countdown from '../../components/countdownComponents/Countdown';
 import Dresscode from '../../components/dresscodeComponents/Dresscode';
