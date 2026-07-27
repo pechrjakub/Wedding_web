@@ -1,3 +1,12 @@
+/*
+TO DO LIST
+-Zvýraznění roku v Journey sekci, když tam bude focus
+-Sekce s programem
+-dodělat styl na inputy ve formuláři
+-formulář
+*/
+
+
 import type { CSSProperties } from "react";
 
 const styles: Record<string, CSSProperties> = {

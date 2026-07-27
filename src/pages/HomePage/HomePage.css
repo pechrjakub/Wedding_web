@@ -1,16 +1,41 @@
-.weddingInfoColorCard:hover{
-  transform: translateY(-4px);
-}
-
-.weddingInfoColorCard:active{
-  transform: scale(0.9);
-}
-
 .heroArrowA:hover {
   opacity: 0.6;
 }
 
+.journeyTimelineItemLeft{
+  justify-content: flex-start;
+}
+
+.journeyTimelineItemRight{
+  justify-content: flex-end;
+}
+
+.journeyLine{
+  left: 50%; /*Dej to doprostřed rodiče*/
+}
+
+.journeyDate{
+  left: 50%; /*dej to do poloviny rodiče zleva*/
+  font-size: 2rem;
+}
+
 /*--------------------------------------*/
+/*!!!Inline style má větši prioritu než media querry!!!*/
+
+@media (max-width: 1300px){
+  .journeyLine{
+    left: 15%;
+  }
+  .journeyDate{
+    left: 15%;
+  }
+  .journeyTimelineItemLeft{
+    justify-content: center;
+  }
+  .journeyTimelineItemRight{
+    justify-content: center;
+  }
+}
 
 @media (max-width: 768px){
   .hero{
@@ -22,5 +47,17 @@
   }
   .countdownDeckOfCards{
     flex-direction: column;
+  }
+  .journeyLine{
+    left: 5%;
+  }
+  .journeyDate{
+    left: 5%;
+  }
+}
+
+@media (max-width: 500px){
+  .journeyDate{
+    font-size: 1rem;
   }
 }
