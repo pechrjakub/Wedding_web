@@ -4,12 +4,19 @@ type dresscodeCardData = {
 
 export const dresscodeCardData = [
     {
-    hexcolor: "#F6D0C5",
+    hexcolor: "#e8dff5",
   },
   {
-    hexcolor: "#EDE8D0",
+    hexcolor: "#fce1e4",
   },
     {
-    hexcolor: "#A1BDCB",
+    hexcolor: "#faf7f0",
   },
+  {
+    hexcolor: "#ddedea",
+  },
+  {
+    hexcolor: "#daeaf6",
+  },
+
 ]

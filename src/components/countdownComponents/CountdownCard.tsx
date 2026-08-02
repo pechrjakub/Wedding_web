@@ -2,21 +2,24 @@ import type { CSSProperties } from "react";
 
 const styles: Record<string, CSSProperties> = {
   countdownCard:{
-    backgroundImage: "linear-gradient(rgba(255, 247, 243, 0.5), rgba(255, 247, 243, 0.5)),url('/images/Pozadi.jpg')",
-    backgroundSize: "cover",
-
-    border: "1px solid #AABBD5",
-    padding: "2rem",
-    flex: "1",
-    width: "clamp(120px, 18vw, 160px)",
+    padding: "1rem 0",
+    width: "clamp(20px, 12vw, 150px)",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
 
     color: "#AABBD5",
   },
   countdownCardH1:{
-    fontSize: "2rem",
+    fontSize: "3rem",
     marginBottom: "0.5rem",
   },
+  countdownCardH2:{
+    fontSize: "2rem",
+
+  },
 }
+
 
 type countdownNumbers = {
     label: string;
@@ -27,7 +30,7 @@ function CountdownCard({label, value}: countdownNumbers){
     return(
         <div style={styles.countdownCard}>
             <h1 style={styles.countdownCardH1}>{value}</h1>
-            <p>{label}</p>
+            <h2 style={styles.countdownCardH2}>{label}</h2>
         </div>
     );
 

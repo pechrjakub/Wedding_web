@@ -9,7 +9,7 @@ import SuccessModal from './successModal';
 const styles: Record<string, CSSProperties> = {
   form:{
     padding: "4rem 2rem", /*Vnitřní odszaení*/
-    backgroundColor: "#FFF7F3",
+    backgroundColor: "#E0E6EF",
     color: "#2f2522",
   },
   formContent:{

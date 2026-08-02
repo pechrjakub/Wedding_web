@@ -17,8 +17,8 @@ const styles: Record<string, CSSProperties> = {
     justifyContent: "center", /*vodorovně na střed*/
     textAlign: "center",
 
-    backgroundImage: "url('/images/Uvodni_foto.JPEG')",
-    backgroundSize: "cover", /*Obrázek vyplní celou část*/
+    backgroundImage: "url('/images/Uvodni_foto.jpg')",
+    backgroundSize: "auto", /*Obrázek vyplní celou část*/
     backgroundPosition: "center", /*Střed obrázku na středu*/
     backgroundRepeat: "no-repeat", /*Obrázek nebude jak dlaždice*/
 
@@ -29,20 +29,20 @@ const styles: Record<string, CSSProperties> = {
     textShadow: "0 4px 18px rgba(0, 0, 0, 0.5)",
   },
   heroContent: {
-    backgroundColor: "rgba(255, 255, 255, 0.7)",
+    backgroundColor: "rgba(255, 255, 255, 0.5)",
     border: "3px solid rgb(0, 0, 0, 0.40)",
-    borderRadius: "1rem",
-    padding: "4rem",
+    padding: "2.5rem",
   },
   heroH1: {
-    fontSize: "clamp(3rem, 12vw, 10rem)", /*plynulá změna velikosti. Minimální, ideální, maximální*/
+    fontSize: "clamp(6rem, 12vw, 16rem)", /*plynulá změna velikosti. Minimální, ideální, maximální*/
     margin: "0.5rem 0",
     maxWidth: "1200px",
     
-    fontFamily: "'Tangerine', cursive",
+    fontWeight: "200",
+    fontFamily: "'The Artist Script', cursive",
   },
   heroP:{
-    fontSize: "clamp(1rem, 3vw, 1.5rem)",
+    fontSize: "clamp(1.5rem, 6vw, 2em)",
     margin: "0.5rem 0", /*Vnější odsazení*/
   },
   heroArrowA: { /*Styl nalezen online*/
@@ -80,7 +80,7 @@ function Hero(){
     return (
     <section className="hero" style={styles.hero}>
         <div className="heroContent" style={styles.heroContent}>
-          <h1 style={styles.heroH1}>Karolína & Jakub</h1>
+          <h1 style={styles.heroH1}>Karolína a Jakub</h1>
           <p style={styles.heroP}> 26 - 09 - 26</p>
         </div>
         <a className="heroArrowA" style={styles.heroArrowA} href="#countdown">

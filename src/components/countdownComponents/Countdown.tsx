@@ -10,6 +10,8 @@ const styles: Record<string, CSSProperties> = {
     textAlign: "center",
     minHeight: "40dvh",
     color: "#2f2522",
+    backgroundImage: "linear-gradient(rgba(255, 247, 243, 0.5), rgba(255, 247, 243, 0.5)),url('/images/Pozadi.jpg')",
+    backgroundSize: "cover",
     },
     countdownContent:{
     maxWidth: "700px",
@@ -22,6 +24,11 @@ const styles: Record<string, CSSProperties> = {
     justifyContent: "center",
     alignItems: "center",
     },
+    countdownH1:{
+    fontSize: "3rem",
+    color: "#AABBD5",
+    paddingBottom: "2rem",
+    }
 }
 
 type CzechCountdownWords = {
@@ -59,7 +66,7 @@ function Countdown(){
     }, [now]);
     
     const countdownNumbers = [
-        {label: makeCzech(days_left, {one: 'den', few: 'dny', many: 'dni'}), value: days_left},
+        {label: makeCzech(days_left, {one: 'den', few: 'dny', many: 'dní'}), value: days_left},
         {label: makeCzech(hours_left, {one: 'hodina', few: 'hodiny', many: 'hodin'}), value: hours_left},
         {label: makeCzech(minutes_left, {one: 'minuta', few: 'minuty', many: 'minut'}), value: minutes_left},
         {label: makeCzech(seconds_left, {one: 'sekunda', few: 'sekundy', many: 'sekund'}), value: seconds_left},
@@ -76,7 +83,7 @@ function Countdown(){
 
     return(
     <section id="countdown" style={styles.countdown}>
-        <h2>Za tak dlouho se bereme</h2>
+        <h1 style={styles.countdownH1}>Každou vteřinou blíž k našemu ANO</h1>
         <div style={styles.countdownContent}>
             <div className="countdownDeckOfCards" style={styles.countdownDeckOfCards}>
                 {countdownNumbers.map((time) => (

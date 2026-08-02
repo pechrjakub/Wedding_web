@@ -3,9 +3,11 @@ import type { CSSProperties } from "react";
 const styles: Record<string, CSSProperties> = {
   place: {
     padding: "4rem 2rem",
-    backgroundColor: "#FFF7F3",
     color: "#2f2522",
     minHeight: "40dvh",
+    backgroundImage: "linear-gradient(rgba(255, 247, 243, 0.5), rgba(255, 247, 243, 0.5)),url('/images/Pozadi.jpg')",
+    backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
   },
   placeContent: {
     maxWidth: "900px",

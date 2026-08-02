@@ -1,5 +1,16 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
-@import url('https://fonts.googleapis.com/css?family=Tangerine');
+/*@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');*/
+
+@font-face {
+  font-family: "The Artist Script";
+  src: url("/fonts/TheArtistScript.woff2") format("woff2");
+  font-display: swap; /*první načte náhradu a až pak tento font. Aby nemizel text při načítání*/
+}
+
+@font-face {
+  font-family: "Gill Sans";
+  src: url("/fonts/GillSans.otf") format("opentype");
+  font-display: swap; /*první načte náhradu a až pak tento font. Aby nemizel text při načítání*/
+}
 
 /* CSS RESET*/
 html, body, div, span, applet, object, iframe,
@@ -47,7 +58,7 @@ table {
 
 /*Vlastní nastavnení*/
 body {
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Gill Sans', sans-serif;
 }
 
 * {
