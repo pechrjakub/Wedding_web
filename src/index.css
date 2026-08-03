@@ -3,13 +3,13 @@
 @font-face {
   font-family: "The Artist Script";
   src: url("/fonts/TheArtistScript.woff2") format("woff2");
-  font-display: swap; /*první načte náhradu a až pak tento font. Aby nemizel text při načítání*/
+  /*font-display: swap; /*první načte náhradu a až pak tento font. Aby nemizel text při načítání*/
 }
 
 @font-face {
   font-family: "Gill Sans";
   src: url("/fonts/GillSans.otf") format("opentype");
-  font-display: swap; /*první načte náhradu a až pak tento font. Aby nemizel text při načítání*/
+  /*font-display: swap; /*první načte náhradu a až pak tento font. Aby nemizel text při načítání*/
 }
 
 /* CSS RESET*/

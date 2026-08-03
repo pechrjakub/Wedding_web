@@ -3,7 +3,7 @@
 }
 
 .journeyTimelineItemLeft{
-  justify-content: space-start;
+  justify-content: flex-start;
 }
 
 .journeyTimelineItemRight{

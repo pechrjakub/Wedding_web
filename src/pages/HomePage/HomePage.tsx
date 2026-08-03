@@ -7,6 +7,7 @@ import Dresscode from '../../components/dresscodeComponents/Dresscode';
 import Schedule from '../../components/scheduleComponents/Schedule';
 import Place from '../../components/Place';
 import Map from '../../components/Map';
+import FAQ from '../../components/FAQ';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
       <Map />
       <Dresscode />
       <Schedule />
+      <FAQ />
       <Form />
     </main>
   );
