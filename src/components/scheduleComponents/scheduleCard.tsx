@@ -2,12 +2,11 @@ import type { CSSProperties } from "react";
 const styles: Record<string, CSSProperties> = {
   scheduleCard:{
     padding: "1rem",
-    width: "min(100%, clamp(140px, 45vw, 250px))", /*To 100% dělá, že karta bude responzivní podle clamp(), ale nikdy nepřeleze šířku rodiče*/
+    width: "150px", /*To 100% dělá, že karta bude responzivní podle clamp(), ale nikdy nepřeleze šířku rodiče*/
     margin: "0 auto",
     },
   schedulePhoto:{
     maxWidth: "100%",
-    aspectRatio: "4 / 3",
     objectFit: "cover",
   },
   scheduleH1:{

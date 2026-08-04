@@ -19,6 +19,20 @@
   font-size: 2rem;
 }
 
+.formInputGroup input:focus~label,
+.formInputGroup input:valid~label {
+  transform: translateY(-50%) scale(.9);
+  margin: 0em;
+  margin-left: 1.3em;
+  padding: 0.4em;
+  background-color: #e8e8e8;
+}
+
+.formInputGroup input:focus, 
+.formInputGroup input:valid {
+  border-color: rgb(150, 150, 200);
+}
+
 /*--------------------------------------*/
 /*!!!Inline style má větši prioritu než media querry!!!*/
 

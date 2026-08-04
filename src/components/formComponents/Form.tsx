@@ -3,13 +3,16 @@ import { useForm } from 'react-hook-form';
 import React from 'react';
 import type { CSSProperties } from "react";
 import { useState } from 'react';
-import { supabase } from "../../lib/supabaseClient";
-import SuccessModal from './successModal';
+import { supabase } from "../../../lib/supabaseClient";
+import SuccessModal from '../successModal';
+import FormInput from './formInput';
 
 const styles: Record<string, CSSProperties> = {
   form:{
     padding: "4rem 2rem", /*Vnitřní odszaení*/
-    backgroundColor: "#E0E6EF",
+    backgroundImage: "linear-gradient(rgba(255, 247, 243, 0.5), rgba(255, 247, 243, 0.5)),url('/images/Pozadi.jpg')",
+    backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
     color: "#2f2522",
   },
   formContent:{
@@ -91,6 +94,7 @@ return(
         <div style={styles.formContent}>
 
           <h1 style={styles.formH1}>Dejte nám vědět, jestli dorazíte</h1> 
+          
 
           <form onSubmit={handleSubmit(onSubmit)} style={styles.formRSVP}>
             <input {...register('name', {required: true})} placeholder='Jméno'style={styles.formInput}/>

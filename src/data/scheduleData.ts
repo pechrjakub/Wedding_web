@@ -11,18 +11,28 @@ export const scheduleData: scheduleData[] = [
         title: "Začátek obřadu",
     },
     {
+        image: '/images/Photo.png',
+        time: "",
+        title: "Společné focení",
+    },
+    {
         image: '/images/Lunch.png',
         time: "",
         title: "Oběd",
     },
     {
-        image: '/images/Photo.png',
-        time: "",
-        title: "Focení",
-    },
-    {
         image: '/images/Cake.png',
         time: "",
-        title: "Přípitek a krájení dortu",
+        title: "Krájení dortu",
+    },
+        {
+        image: '/images/Dance.png',
+        time: "",
+        title: "První tanec",
+    },
+        {
+        image: '/images/Fun.png',
+        time: "",
+        title: "Večerní zábava",
     },
 ]

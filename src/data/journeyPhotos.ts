@@ -27,7 +27,7 @@ export const journeyPhotos: JourneyPhoto[] = [
   {
     year: '2022',
     title: 'Čtvrtý společný rok',
-    description: 'Cestovatelská nálada nás neopustila, a tak jsme rok zakončili vánočním New Yorkem. Zásnuby už sice mohly být v plánu, ale nakonec si někdo řekl, že je ještě chvíli podrží v napětí.',
+    description: 'Cestovatelská nálada nás neopustila, a tak jsme rok zakončili vánočním New Yorkem.',
     image: '/images/2022.jpeg',
   },
     {
@@ -39,7 +39,7 @@ export const journeyPhotos: JourneyPhoto[] = [
     {
     year: '2024',
     title: 'Šestý společný rok',
-    description: 'Kubův bakalářský titul jsme oslavili stylově — cestou do Japonska. Zásnuby už sice byly v plánu, ale jejich chvíle si nakonec počkala na ten pravý okamžik.',
+    description: 'Kubův bakalářský titul jsme oslavili stylově — cestou do Japonska.',
     image: '/images/2024.jpeg',
   },
     {
