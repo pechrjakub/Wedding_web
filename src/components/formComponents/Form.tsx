@@ -94,8 +94,7 @@ return(
         <div style={styles.formContent}>
 
           <h1 style={styles.formH1}>Dejte nám vědět, jestli dorazíte</h1> 
-          
-
+        
           <form onSubmit={handleSubmit(onSubmit)} style={styles.formRSVP}>
             <input {...register('name', {required: true})} placeholder='Jméno'style={styles.formInput}/>
             {errors.name && <p className='error'>Vyplněte své jmeno</p>}
