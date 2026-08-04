@@ -5,7 +5,7 @@ import type { CSSProperties } from "react";
 import { useState } from 'react';
 import { supabase } from "../../../lib/supabaseClient";
 import SuccessModal from '../successModal';
-import FormInput from './formInput';
+/*import FormInput from './formInput';*/
 
 const styles: Record<string, CSSProperties> = {
   form:{
