@@ -19,18 +19,27 @@
   font-size: 2rem;
 }
 
+
+/* Type nr. 1
 .formInputGroup input:focus~label,
 .formInputGroup input:valid~label {
-  transform: translateY(-50%) scale(.9);
-  margin: 0em;
-  margin-left: 1.3em;
-  padding: 0.4em;
-  background-color: #e8e8e8;
+  top: 0 !important;
+  transform: translateY(-50%) scale(.9) !important;
+  padding: 0 0.6rem !important;
 }
 
 .formInputGroup input:focus, 
 .formInputGroup input:valid {
-  border-color: rgb(150, 150, 200);
+  border-color: #9696C8 !important;
+}
+*/
+/*najdi prvek formInputGroup, v něm najdi input, co je focusnutý a pak vyber label, který je HNED (+) za tím inputem (~ volnější)*/
+.formInputGroup input:focus + label,
+.formInputGroup input:valid + label 
+{
+  top: -20px !important;
+  color: #AABBD5 !important;
+  font-size: 0.9rem !important;
 }
 
 /*--------------------------------------*/

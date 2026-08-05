@@ -5,7 +5,7 @@ import type { CSSProperties } from "react";
 import { useState } from 'react';
 import { supabase } from "../../../lib/supabaseClient";
 import SuccessModal from '../successModal';
-/*import FormInput from './formInput';*/
+import FormInput from './formInput';
 
 const styles: Record<string, CSSProperties> = {
   form:{
@@ -21,9 +21,9 @@ const styles: Record<string, CSSProperties> = {
     textAlign: "center",
   },
   formH1:{
-    fontSize: "1.5rem",
-    color: "#D289C3",
-    paddingBottom: "2rem",
+    fontSize: "3rem",
+    color: "#AABBD5",
+    paddingBottom: "2rem",   
   },
   formInput:{
     border: "1px solid #000000",
@@ -38,7 +38,7 @@ const styles: Record<string, CSSProperties> = {
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
-    gap: "1rem",
+    gap: "2rem",
     width: "100%",
   },
 }
@@ -94,8 +94,8 @@ return(
         <div style={styles.formContent}>
 
           <h1 style={styles.formH1}>Dejte nám vědět, jestli dorazíte</h1> 
-        
           <form onSubmit={handleSubmit(onSubmit)} style={styles.formRSVP}>
+            <FormInput />
             <input {...register('name', {required: true})} placeholder='Jméno'style={styles.formInput}/>
             {errors.name && <p className='error'>Vyplněte své jmeno</p>}
             <select {...register("attendance", { required: true })}>
