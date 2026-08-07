@@ -6,15 +6,14 @@ type FAQData = {
 }
 
 
-const styles: Record<string, CSSProperties> ={
+const styles ={
     FAQQuestionH1:{
         fontSize: "2rem",
         color: "#D289C3",
         paddingBottom: "1rem",
         fontFamily: "The Artist Script",
     },
-
-}
+} satisfies Record<string, CSSProperties>
 
 function FAQQuestion({question, answer}: FAQData) {
     return (

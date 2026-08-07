@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
 
-const styles: Record<string, CSSProperties> = {
+const styles = {
   countdownCard:{
     padding: "1rem 0",
     width: "clamp(20px, 12vw, 150px)",
@@ -18,7 +18,7 @@ const styles: Record<string, CSSProperties> = {
     fontSize: "2rem",
 
   },
-}
+} satisfies Record<string, CSSProperties>
 
 
 type countdownNumbers = {

@@ -2,7 +2,7 @@ import type { CSSProperties } from "react";
 import FAQQuestion from "./FAQQuestion";
 import {FAQData} from "../../data/FAQData";
 
-const styles: Record<string, CSSProperties> = {
+const styles = {
     FAQ:{
         padding: "4rem 2rem", /*Vnitřní odszaení*/
         backgroundColor: "#E0E6EF",
@@ -24,7 +24,7 @@ const styles: Record<string, CSSProperties> = {
         flexDirection: "column",
         gap: "4rem",
     },
-}
+} satisfies Record<string, CSSProperties>
 
 function FAQ (){
     return (

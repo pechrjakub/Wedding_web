@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
 
-const styles: Record<string, CSSProperties> = {
+const styles = {
   journeyCard:{
     border: "1px solid rgba(47, 37, 34, 0.12)",
     padding: "1rem",
@@ -19,7 +19,7 @@ const styles: Record<string, CSSProperties> = {
     padding: "1rem 0",
     textAlign: "center",
   }
-}
+} satisfies Record<string, CSSProperties>
 type JourneyPhoto = {
   title: string;
   description: string;

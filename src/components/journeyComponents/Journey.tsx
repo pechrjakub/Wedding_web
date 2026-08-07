@@ -2,7 +2,7 @@ import type { CSSProperties } from "react";
 import { journeyPhotos } from '../../data/journeyPhotos';
 import JourneyCard from "./journeyCard";
 
-const styles: Record<string, CSSProperties> = {
+const styles = {
   journey: {
     padding: "4rem 2rem",
     backgroundColor: "#E0E6EF",
@@ -58,7 +58,8 @@ const styles: Record<string, CSSProperties> = {
     border: "3px solid #AABBD5",
     backgroundColor: "#E0E6EF",*/
   },
-}
+} satisfies Record<string, CSSProperties>
+
 function Journey(){
     return(
       <section style={styles.journey}>

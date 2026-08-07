@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
 
-const styles: Record<string, CSSProperties> = {
+const styles = {
   place: {
     padding: "4rem 2rem",
     color: "#2f2522",
@@ -20,7 +20,7 @@ const styles: Record<string, CSSProperties> = {
   placeH1:{
     margin: "0.5rem",
   },
-}
+} satisfies Record<string, CSSProperties>
 
 function Place (){
   return (

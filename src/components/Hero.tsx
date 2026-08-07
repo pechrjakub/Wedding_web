@@ -1,15 +1,21 @@
 /*
 TO DO LIST
 -Zvýraznění roku v Journey sekci, když tam bude focus
--Sekce s programem
 -dodělat styl na inputy ve formuláři
 -formulář
 */
 
+/*
+Komponenta jako hlavní věc souboru → export default → import bez {}
+Data / typy / více věcí ze souboru → export → import s {} = Named export
+{} chlupaté závorky = objekt / kus JavaScriptu / named import-export
+[] hranaté závorky = pole / seznam / závislosti hooku
+() kulaté závorky = volání funkce / parametry / obalení JSX
+*/
 
 import type { CSSProperties } from "react";
 
-const styles: Record<string, CSSProperties> = {
+const styles = {
   hero: {
     minHeight: "100dvh", 
     display: "flex", /*"automatické" rozložení obsahu*/
@@ -74,7 +80,12 @@ const styles: Record<string, CSSProperties> = {
     transform: "translate(-50%, -60%) rotate(-45deg)",
     boxSizing: "border-box",
   }
-}
+} satisfies Record<string, CSSProperties>
+
+/*Zkontroluje, že všechny styly uvnitř objektu odpovídají CSSproperities. Typescript ale sám odvodí konkrétní název stylů. Je to pomoc Typescriptu
+Record <něco, něco> je Typescript typ pro objekt. Konkrétní případ říká, že názvy vlastností jsou text a jejich hodnota musí být platný react inline styl*/
+/*inline style je vlstně kostnantí proměnná, co je jeden velký objekt plný objektů pro jednotlivé prvky. 
+Pak říkám: Vezmi objekt xxx z objektu styles a použij ho jako inline styl pro tento konkrétní prvek*/
 
 function Hero(){
     return (

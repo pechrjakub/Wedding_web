@@ -1,12 +1,12 @@
 import type { CSSProperties } from "react";
 
-const styles: Record<string, CSSProperties> = {
+const styles = {
   placeMap:{
     width:"100%",
     height:"50dvh",
     border: "0",
   },
-}
+} satisfies Record<string, CSSProperties>
 function Map () {
   const latitude = 49.06911462681072;
   const longitude = 14.30299697328157;

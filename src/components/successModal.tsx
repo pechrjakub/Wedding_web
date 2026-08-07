@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
 
-const styles: Record<string, CSSProperties> = {
+const styles = {
     modalScene:{
         position: "fixed",
         inset: "0",
@@ -36,7 +36,7 @@ const styles: Record<string, CSSProperties> = {
         width: "120px",
         marginBottom: "60px",
     },
-}
+} satisfies Record<string, CSSProperties>
 type modalProps = {
     isOpen: boolean;
     onClose: () => void; /*Funkce bez vstupních hodnot a nic nevrací. To je její typ*/

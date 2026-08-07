@@ -1,5 +1,5 @@
 import type { CSSProperties } from "react";
-const styles: Record<string, CSSProperties> = {
+const styles = {
   scheduleCard:{
     padding: "1rem",
     width: "150px", /*To 100% dělá, že karta bude responzivní podle clamp(), ale nikdy nepřeleze šířku rodiče*/
@@ -12,7 +12,7 @@ const styles: Record<string, CSSProperties> = {
   scheduleH1:{
     margin: "0.5rem 0",
   }
-}
+} satisfies Record<string, CSSProperties>
 
 type scheduleData = {
     image: string;

@@ -7,7 +7,7 @@ import { supabase } from "../../../lib/supabaseClient";
 import SuccessModal from '../successModal';
 import FormInput from './formInput';
 
-const styles: Record<string, CSSProperties> = {
+const styles = {
   form:{
     padding: "4rem 2rem", /*Vnitřní odszaení*/
     backgroundImage: "linear-gradient(rgba(255, 247, 243, 0.5), rgba(255, 247, 243, 0.5)),url('/images/Pozadi.jpg')",
@@ -41,7 +41,7 @@ const styles: Record<string, CSSProperties> = {
     gap: "2rem",
     width: "100%",
   },
-}
+} satisfies Record<string, CSSProperties> 
 
 type FormData ={
   name: string;

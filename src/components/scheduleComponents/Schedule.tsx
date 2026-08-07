@@ -2,7 +2,7 @@ import type { CSSProperties } from "react";
 import { scheduleData } from '../../data/scheduleData';
 import ScheduleCard from "./scheduleCard";
 
-const styles: Record<string, CSSProperties> = {
+const styles = {
   schedule: {
     padding: "4rem 2rem",
     color: "#2f2522",
@@ -23,7 +23,7 @@ const styles: Record<string, CSSProperties> = {
     color: "#AABBD5",
     paddingBottom: "2rem",    
   },
-}
+} satisfies Record<string, CSSProperties> 
 
 function Schedule (){
     return(

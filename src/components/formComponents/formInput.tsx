@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
 
-const styles: Record<string, CSSProperties> ={
+const styles ={
     /* Type nr. 1
     formInputGroup:{
         position: "relative",
@@ -47,8 +47,7 @@ const styles: Record<string, CSSProperties> ={
         pointerEvents: "none",
         transition: "all 0.3s ease",
     },
-
-}
+} satisfies Record<string, CSSProperties>
 function FormInput (){
     return(
         

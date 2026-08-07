@@ -2,7 +2,7 @@ import type { CSSProperties } from "react";
 import DresscodeCard from "./dresscodeCard";
 import {dresscodeCardData} from "../../data/dresscodeCardData";
 
-const styles: Record<string, CSSProperties> = {
+const styles = {
   dresscode: {
     padding: "4rem 2rem",
     backgroundColor: "#E0E6EF",
@@ -32,8 +32,7 @@ const styles: Record<string, CSSProperties> = {
     justifyContent: "center",
     alignItems: "center",
   },
-
-}
+} satisfies Record<string, CSSProperties>
 
 function Dresscode (){
     return (

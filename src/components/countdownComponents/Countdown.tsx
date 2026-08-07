@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import CountdownCard from "./CountdownCard";
 import type { CSSProperties } from "react";
 
-const styles: Record<string, CSSProperties> = {
+const styles = {
     countdown:{
     padding: "4rem 2rem", /*Vnitřní odszaení*/
     backgroundColor: "#FFF7F3",
@@ -29,7 +29,7 @@ const styles: Record<string, CSSProperties> = {
     color: "#AABBD5",
     paddingBottom: "2rem",
     }
-}
+} satisfies Record<string, CSSProperties>
 
 type CzechCountdownWords = {
     one: string,
