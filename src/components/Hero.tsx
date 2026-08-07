@@ -13,6 +13,11 @@ Data / typy / více věcí ze souboru → export → import s {} = Named export
 () kulaté závorky = volání funkce / parametry / obalení JSX
 */
 
+/*
+import type slouží k pouze pro TypeScript. Je to ke kontrole kódu, našeptávání atd. Po buildu zmizí
+věc importovanou přes type nemohu používat jako normální hodnotu
+*/
+
 import type { CSSProperties } from "react";
 
 const styles = {

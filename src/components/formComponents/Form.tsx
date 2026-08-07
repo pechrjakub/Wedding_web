@@ -25,14 +25,6 @@ const styles = {
     color: "#AABBD5",
     paddingBottom: "2rem",   
   },
-  formInput:{
-    border: "1px solid #000000",
-    height: "2rem",
-    width: "100%",
-    maxWidth: "500px",
-    borderRadius: "0.5rem",
-    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.5)",
-  },
   formRSVP:{
     display: "flex",
     flexDirection: "column",
@@ -92,25 +84,55 @@ React.useEffect(() => {
 return(
       <section style={styles.form}>
         <div style={styles.formContent}>
-
           <h1 style={styles.formH1}>Dejte nám vědět, jestli dorazíte</h1> 
+          
           <form onSubmit={handleSubmit(onSubmit)} style={styles.formRSVP}>
-            <FormInput />
-            <input {...register('name', {required: true})} placeholder='Jméno'style={styles.formInput}/>
-            {errors.name && <p className='error'>Vyplněte své jmeno</p>}
+            <FormInput 
+              label="Jméno a příjmení"
+              type="text"
+              required
+              placeholder=" " /*To tady využívám, kvůli stylování. (Používal jsem tam valid)*/
+              {...register('name', {required: true})} /*Toto required je primárně pro ReactHookForm
+              ↓ pokud existuje error.name, tak vykresli <p>. Pokud ne, nic nevykresluj
+              */
+            />
+            {errors.name && <p className='error'></p>} 
+
             <select {...register("attendance", { required: true })}>
               <option value="yes">Ano</option>
               <option value="no">Ne</option>
             </select>
             {attendanceState === 'yes' && (
               <div className="attendee_details" style={styles.formRSVP}>
+                <FormInput
+                  label="Máš nějaké alergie?"
+                  maxLength={50}
+                  type="text"
+                  placeholder=" "
+                  {...register("allergies", { maxLength: 50})}
+                />
+
+                <FormInput
+                  label="Song na přání"
+                  maxLength={100}
+                  type="text"
+                  placeholder= " "
+                  {...register("songRequest", { maxLength: 100})}
+                />
                 <input min={1} max={10} type="number" placeholder="Počet hostů" {...register("guestCount", {required: true, max: 10, min: 1})} />
-                <input maxLength={50} type="text" placeholder="Máš nějaké alergie?" {...register("allergies", { maxLength: 50})} style={styles.formInput}/>
-                <input maxLength={100} type="text" placeholder="Nějaký song, co bys chtěl zahrát?" {...register("songRequest", { maxLength: 100})} style={styles.formInput}/>
+                
+                <FormInput
+                  label="Ještě něco, co bychom měli vědět?"
+                  maxLength={200}
+                  type="text"
+                  placeholder= " "
+                  {...register("songRequest", { maxLength: 200})}
+                />
               </div>)}
             <input type="submit"/>
-          
           </form>
+
+
           {modalState && (
             <SuccessModal
             isOpen={modalState}

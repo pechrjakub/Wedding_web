@@ -33,9 +33,14 @@
   border-color: #9696C8 !important;
 }
 */
-/*najdi prvek formInputGroup, v něm najdi input, co je focusnutý a pak vyber label, který je HNED (+) za tím inputem (~ volnější)*/
+/*najdi prvek formInputGroup, v něm najdi input, co je focusnutý a pak vyber label, který je HNED (+) za tím inputem (~ volnější hledání)*/
+
+/*not(:placeholder-shown) používám místo :valid. Říká že když není placeholder zobrazený = Když už input nezobrazuje žádnou hodnotu
+Já tam prvně vložím placeholder jako mezeru, aby tam palceholder existoval, ale nic tam nebylo. Musí existovat, aby s tím šlo pracovat.
+Jakmile kliknu do pole a něco napíšu, placeholder mizí, tato podmínka platí a posune se to. Posouvá se to i při kliknutí díky focus
+*/
 .formInputGroup input:focus + label,
-.formInputGroup input:valid + label 
+.formInputGroup input:not(:placeholder-shown) + label 
 {
   top: -20px !important;
   color: #AABBD5 !important;
