@@ -1,8 +1,7 @@
 /*
 TO DO LIST
 -Zvýraznění roku v Journey sekci, když tam bude focus
--dodělat styl na inputy ve formuláři
--formulář
+-Chybějící informace ve formuláři nějak zvýraznit
 */
 
 /*

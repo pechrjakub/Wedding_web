@@ -4,7 +4,7 @@ const styles = {
   placeMap:{
     width:"100%",
     height:"50dvh",
-    border: "0",
+    border: "none",
   },
 } satisfies Record<string, CSSProperties>
 function Map () {

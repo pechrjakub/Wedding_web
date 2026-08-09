@@ -47,6 +47,11 @@ Jakmile kliknu do pole a něco napíšu, placeholder mizí, tato podmínka plat�
   font-size: 0.9rem !important;
 }
 
+.formAttendanceInput:checked + label {
+  background-color: #AABBD5 !important;
+  color: #FFFFFF !important;
+  transform: scale(0.1) !important;
+}
 /*--------------------------------------*/
 /*!!!Inline style má větši prioritu než media querry!!!*/
 

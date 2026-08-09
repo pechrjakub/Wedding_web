@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { supabase } from "../../../lib/supabaseClient";
 import SuccessModal from '../successModal';
 import FormInput from './formInput';
+import FormBox from './formBox';
 
 const styles = {
   form:{
@@ -32,38 +33,62 @@ const styles = {
     justifyContent: "center",
     gap: "2rem",
     width: "100%",
+    position: "relative",
+  },
+  formSubmitButton:{
+    color: "#AABBD5",
+    backgroundColor: "transparent",
+    cursor: "pointer",
+    fontSize: "1rem",
+    border: "none",
+    borderBottom: "1px solid #AABBD5",
+  },
+  formLegend:{
+    fontSize: "1rem",
+    color: "#AABBD5",
+    marginBottom: "1rem",
   },
 } satisfies Record<string, CSSProperties> 
 
-type FormData ={
+type RSVPFormData ={
   name: string;
-  attendance: 'yes' | 'no';
+  attendance: 'yes' | 'no' | '';
   guestCount: number;
   allergies: string;
   songRequest: string;
+  moreInfo: string;
+  alcohol: 'yes' | 'no' | '';
+  alcoholTypes: string[];
 }
 
 function Form(){
   
-const { register, handleSubmit, formState: { errors }, watch, unregister} = useForm<FormData>({
+const { register, handleSubmit, formState: { errors }, watch, unregister} = useForm<RSVPFormData>({
   defaultValues: {
     name: '',
-    attendance: 'no',
+    attendance: '',
     guestCount: 1,
     allergies: '',
     songRequest: '',
+    moreInfo: '',
+    alcohol: '',
+    alcoholTypes: [],
   },
 });
 
 const attendanceState = watch('attendance');
+const alcoholState = watch ('alcohol');
 const [modalState, setModalState] = useState (false);
-const onSubmit = async (data: FormData) => { /*Async zde mám, protože ta funkce bude trvat delší dobu = čekám na odpověď databáze.*/
+const onSubmit = async (data: RSVPFormData) => { /*Async zde mám, protože ta funkce bude trvat delší dobu = čekám na odpověď databáze.*/
   const {error} = await supabase.from("wedding_form").insert({ /*{error} = z celého objektu si vem jen error. await čeká na odpověď databáze, musí být v async funkci*/
     name: data.name,
     attendance: data.attendance,
-    guest_count: Number(data.guestCount), /*Pojistka, že opravdu odesílám čáslo*/
+    guest_count: data.attendance === "yes" ? Number(data.guestCount) : 0,
     allergies: data.allergies || null, 
     requested_song: data.songRequest || null,
+    more_info: data.moreInfo || null,
+    alcohol: data.attendance === "yes" ? data.alcohol : "no",
+    alcohol_types: data.alcohol === "yes" ? data.alcoholTypes : [],
   });
 
   if (error) {
@@ -77,9 +102,15 @@ const onSubmit = async (data: FormData) => { /*Async zde mám, protože ta funkc
 
 React.useEffect(() => {
   if (attendanceState === 'no') {
-    unregister(['guestCount', 'allergies', 'songRequest']);
+    unregister(['guestCount', 'allergies', 'songRequest', 'moreInfo', 'alcohol']);
   }
 }, [unregister, attendanceState]);
+
+React.useEffect(() => {
+  if (alcoholState === 'no') {
+    unregister(['alcoholTypes']);
+  }
+}, [unregister, alcoholState]);
 
 return(
       <section style={styles.form}>
@@ -88,7 +119,7 @@ return(
           
           <form onSubmit={handleSubmit(onSubmit)} style={styles.formRSVP}>
             <FormInput 
-              label="Jméno a příjmení"
+              label="Jméno"
               type="text"
               required
               placeholder=" " /*To tady využívám, kvůli stylování. (Používal jsem tam valid)*/
@@ -98,14 +129,38 @@ return(
             />
             {errors.name && <p className='error'></p>} 
 
-            <select {...register("attendance", { required: true })}>
-              <option value="yes">Ano</option>
-              <option value="no">Ne</option>
-            </select>
+            <fieldset style={{...styles.formRSVP, flexDirection: "row", gap: "1rem"}}>
+              <legend style={styles.formLegend}>Dorazíte?</legend>
+              <FormBox 
+              label="Ano"
+              value="yes"
+              type="radio"
+              id="yes"
+              {...register("attendance", { required: true })}
+              />
+              <FormBox 
+              label="Ne"
+              value="no"
+              type="radio"
+              id="no"
+              {...register("attendance", { required: true })}
+              />
+            </fieldset>
+
             {attendanceState === 'yes' && (
               <div className="attendee_details" style={styles.formRSVP}>
+                
                 <FormInput
-                  label="Máš nějaké alergie?"
+                  label="Kolik vás můžeme očekávat?"
+                  type="number"
+                  placeholder=" "
+                  min={1}
+                  max={7}
+                  {...register("guestCount", {required: true, max: 7, min: 1})}
+                /> 
+ 
+                <FormInput
+                  label="Máte nějaké alergie?"
                   maxLength={50}
                   type="text"
                   placeholder=" "
@@ -113,23 +168,67 @@ return(
                 />
 
                 <FormInput
-                  label="Song na přání"
+                  label="Máte písničku na přání?"
                   maxLength={100}
                   type="text"
                   placeholder= " "
                   {...register("songRequest", { maxLength: 100})}
                 />
-                <input min={1} max={10} type="number" placeholder="Počet hostů" {...register("guestCount", {required: true, max: 10, min: 1})} />
                 
+                <fieldset style={{...styles.formRSVP, flexDirection: "row", gap: "1rem"}}>
+                  <legend style={styles.formLegend}>Budete pít alkohol?</legend>
+                  <FormBox
+                    label="Ano"
+                    value="yes"
+                    type="radio"
+                    id="yes_2"
+                    {...register("alcohol", { required: true })}
+                  />
+                  <FormBox
+                    label="Ne"
+                    value="no"
+                    type="radio"
+                    id="no_2"
+                    {...register("alcohol", { required: true })}
+                  />
+                </fieldset>
+
+              {alcoholState === 'yes' && (
+                <fieldset style={{...styles.formRSVP, flexDirection: "row", gap: "1rem"}}>
+                  <legend style={styles.formLegend}>Co přesně si dáte?</legend>
+                  <FormBox
+                    label="Pivo"
+                    value="pivo"
+                    type="checkbox"
+                    id="beer"
+                    {...register ("alcoholTypes")}
+                  />
+                  <FormBox
+                    label="Víno"
+                    value="víno"
+                    type="checkbox"
+                    id="wine"
+                    {...register ("alcoholTypes")}
+                  />
+                  <FormBox
+                    label="Drinky"  
+                    value="drinky"
+                    type="checkbox"
+                    id="drinks"
+                    {...register ("alcoholTypes")}
+                  />
+                </fieldset>
+              )}
+
                 <FormInput
                   label="Ještě něco, co bychom měli vědět?"
                   maxLength={200}
                   type="text"
                   placeholder= " "
-                  {...register("songRequest", { maxLength: 200})}
+                  {...register("moreInfo", { maxLength: 200})}
                 />
               </div>)}
-            <input type="submit"/>
+            <input type="submit" style={styles.formSubmitButton} value="Odeslat formulář" />
           </form>
 
 

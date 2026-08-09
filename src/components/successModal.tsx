@@ -14,7 +14,7 @@ const styles = {
         height: "400px",
         width: "400px",
         border: "1px solid rgb(0, 0, 0, 0.40)",
-        borderRadius: "1rem",
+
         backgroundColor: "#FFF7F3",
 
         display: "flex",
@@ -29,7 +29,6 @@ const styles = {
         fontSize: "1rem",
         backgroundColor: "#AABBD5",
         border: "1px solid rgb(0, 0, 0, 0.20)",
-        borderRadius: "5px",
     },
     checkmark:{
         height: "120px",
