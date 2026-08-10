@@ -13,7 +13,7 @@ type InvitationStep =
 
 function DigitalInvitation() {
   const { slug } = useParams();
-
+  
   const [invitationStep, setInvitationStep] = useState<InvitationStep>("back");
   const [recipientName, setRecipientName] = useState<string | null>(null);
 
@@ -67,6 +67,7 @@ const isOpen =
 const isLetter = invitationStep === "letter";
 const isRevealed = invitationStep === "revealed" || invitationStep === "qr";
 const isQr = invitationStep === "qr";
+const shouldShowRecipient = invitationStep === "back" && recipientName;
 
 function handleEnvelopeClick() {
   if (invitationStep === "back") {
@@ -134,7 +135,9 @@ function handleEnvelopeClick() {
 
           <div className="envelope__card">
             <div className="envelope__side envelope__side--back">
-              <p className="envelope__recipient">{recipientName}</p>
+              {shouldShowRecipient && (
+                <p className="envelope__recipient">{recipientName}</p>
+              )}
             </div>
             <div className="envelope__side envelope__side--front">
             <div className="envelope__front-shape">
