@@ -1,17 +1,33 @@
 # Svatební web
 
-Pokus o svatební web
+## Fotky s přístupem přes QR
 
-## Fotky ze svatby
+Stránka /pechrovi/fotky bez klíče zůstává zamčená. QR obsahuje adresu
+https://pechrovi.cz/pechrovi/fotky#klic=TAJNY_KLIC.
+Klíč ověřuje POST /api/photo-access na serveru, který až po ověření vrátí Dropbox odkaz.
+Odpovědi nejsou cachované. Odkaz ani klíč se nevkládají do klientského JS.
 
-Stránka pro hosty je na `/pechrovi/fotky`. Bez platného odkazu zobrazuje informaci,
-že nahrávání ještě není otevřené.
+### Nastavení
 
-Pro zapnutí nastavte `VITE_DROPBOX_FILE_REQUEST_URL` v `.env.local` na HTTPS odkaz
-Dropbox File request ve tvaru `https://www.dropbox.com/request/...` a restartujte
-vývojový server. Na Vercelu nastavte stejnou proměnnou a proveďte nový deployment.
-Použijte žádost o soubory, nikoli sdílenou složku. Odkaz je veřejnou součástí webu;
-heslo k žádosti do této proměnné ani zdrojového kódu nepatří.
+V .env.local a na Vercelu nastavte serverové proměnné (bez prefixu VITE_):
+- PHOTO_ACCESS_KEY: náhodný klíč, alespoň 32 znaků; lokálně již vygenerovaný.
+- DROPBOX_FILE_REQUEST_URL: HTTPS odkaz Dropbox žádosti.
 
-QR kód má odkazovat na `/pechrovi/fotky` na produkční doméně, aby šlo později
-změnit cíl tlačítka bez změny vytištěného QR. Samotná stránka neověřuje hosty.
+Z Vercelu odstraňte původní VITE_DROPBOX_FILE_REQUEST_URL. Nastavte nové proměnné
+pro Production (případně Preview), commitněte a pushněte kód a proveďte deployment.
+Lokální URL pro QR je v ignorovaném photo-access.local.txt. Tento soubor ani
+.env.local necommitujte. Klíč neměňte po vytištění QR, pokud ho nechcete zneplatnit.
+
+npm run dev podporuje stejný serverový handler přes Vite middleware.
+Po změně .env.local restartujte server. npm run preview serverovou funkci neposkytuje.
+Testy přístupu: node --experimental-strip-types --test server/photo-access.test.ts
+
+### Ověření nasazení
+
+Bez fragmentu a s nesprávným klíčem se tlačítko nesmí zobrazit.
+S platným klíčem se zobrazí Dropbox odkaz. Zkontrolujte i odstranění fragmentu
+ze stejného okna. Síťová chyba nabídne opakování ověření.
+
+Celý zkopírovaný QR odkaz funguje stejně jako výtisk. Přímý Dropbox odkaz lze
+po získání použít samostatně. Starší veřejné deploymenty mohou obsahovat původní
+Dropbox odkaz: pro zneplatnění použijte novou žádost a původní uzavřete.

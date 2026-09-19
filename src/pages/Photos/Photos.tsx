@@ -1,26 +1,43 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Photos.css';
 
-// Veřejný odkaz na Dropbox File request, nikoli odkaz ke sdílené složce.
-function getUploadUrl(): string | null {
-  const value = import.meta.env.VITE_DROPBOX_FILE_REQUEST_URL?.trim();
-  if (!value) return null;
-
-  try {
-    const url = new URL(value);
-    return url.protocol === 'https:' &&
-      ['www.dropbox.com', 'dropbox.com'].includes(url.hostname) &&
-      /^\/request\/[^/]+\/?$/.test(url.pathname) &&
-      !url.username && !url.password
-      ? url.href
-      : null;
-  } catch {
-    return null;
-  }
-}
-
 export default function Photos() {
-  const uploadUrl = getUploadUrl();
+  const [uploadUrl, setUploadUrl] = useState<string | null>(null);
+  const [status, setStatus] = useState('locked');
+  const [attempt, setAttempt] = useState(0);
+  useEffect(() => {
+    const controller = new AbortController();
+    async function verify() {
+      setUploadUrl(null);
+      const key = new URLSearchParams(window.location.hash.slice(1)).get('klic');
+      if (!key) { setStatus('locked'); return; }
+      setStatus('loading');
+      try {
+        const response = await fetch('/api/photo-access', {
+          method: 'POST', headers: { Authorization: 'Bearer ' + key },
+          cache: 'no-store', signal: controller.signal,
+        });
+        if (controller.signal.aborted) return;
+        if (response.status === 403) { setStatus('locked'); return; }
+        if (!response.ok) throw new Error();
+        const data = await response.json();
+        if (controller.signal.aborted) return;
+        if (typeof data.uploadUrl !== 'string') throw new Error();
+        setUploadUrl(data.uploadUrl);
+        setStatus('ready');
+      } catch {
+        if (!controller.signal.aborted) setStatus('error');
+      }
+    }
+    void verify();
+    return () => controller.abort();
+  }, [attempt]);
+  useEffect(() => {
+    const changed = () => { setUploadUrl(null); setAttempt(value => value + 1); };
+    window.addEventListener('hashchange', changed);
+    return () => window.removeEventListener('hashchange', changed);
+  }, []);
 
   return (
     <main className="photos-page">
@@ -51,9 +68,10 @@ export default function Photos() {
               <p>Pokračujete na Dropbox. Vlastní účet nepotřebujete.</p>
             </>
           ) : (
-            <div className="photos-pending">
-              <h2>Nahrávání ještě není otevřené</h2>
-              <p>Fotky si zatím schovejte. Až sběr otevřeme, najdete tady tlačítko pro jejich nahrání.</p>
+            <div className="photos-pending" aria-live="polite">
+              <h2>{status === 'loading' ? 'Ověřujeme přístup…' : status === 'error' ? 'Nahrávání teď není dostupné' : 'Nahrávání přes svatební QR kód'}</h2>
+              <p>{status === 'loading' ? 'Ještě okamžik, prosím.' : status === 'error' ? 'Ověření se nepodařilo. Zkuste to prosím znovu za chvíli.' : 'Pro nahrání fotek načtěte QR kód na svatbě. Samotná adresa stránky nahrávání nezpřístupní.'}</p>
+              {status === 'error' && <button className="photos-button" type="button" onClick={() => setAttempt(value => value + 1)}>Zkusit znovu</button>}
             </div>
           )}
         </div>
