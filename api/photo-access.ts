@@ -1,5 +1,5 @@
 import type { IncomingMessage, ServerResponse } from 'node:http';
-import { authorizePhotos } from '../server/photo-access.ts';
+import { authorizePhotos } from '../server/photo-access.js';
 
 export default function handler(req: IncomingMessage, res: ServerResponse) {
   res.setHeader('Cache-Control', 'no-store');

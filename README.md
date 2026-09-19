@@ -20,7 +20,7 @@ Lokální URL pro QR je v ignorovaném photo-access.local.txt. Tento soubor ani
 
 npm run dev podporuje stejný serverový handler přes Vite middleware.
 Po změně .env.local restartujte server. npm run preview serverovou funkci neposkytuje.
-Testy přístupu: node --experimental-strip-types --test server/photo-access.test.ts
+Testy přístupu: npm run test:server
 
 ### Ověření nasazení
 
@@ -31,3 +31,4 @@ ze stejného okna. Síťová chyba nabídne opakování ověření.
 Celý zkopírovaný QR odkaz funguje stejně jako výtisk. Přímý Dropbox odkaz lze
 po získání použít samostatně. Starší veřejné deploymenty mohou obsahovat původní
 Dropbox odkaz: pro zneplatnění použijte novou žádost a původní uzavřete.
+
